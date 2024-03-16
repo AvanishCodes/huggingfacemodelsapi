@@ -1,9 +1,13 @@
 from .views.tts import TTSAPIView
+from .views.stt import STTAPIView
+from .views.completions import SentenceCompletionsAPIView
 
 from django.urls import path
 
 urlpatterns = [
-    path("tts/", TTSAPIView.as_view(), name="tts"),
+    path("gtts/tts/", TTSAPIView.as_view(), name="tts"),
+    # path("stt/", STTAPIView.as_view(), name="stt"),
+    path("gpt2/completions/", SentenceCompletionsAPIView.as_view(), name="completions"),
 ]
 
 __all__ = ["urlpatterns"]
