@@ -1,4 +1,3 @@
-# tts_api/views.py
 import os
 import uuid
 from rest_framework.views import APIView
@@ -47,6 +46,7 @@ class TTSAPIView(APIView):
             # Load text-to-speech pipeline
             tts = gTTS(text=text, lang=lang, slow=False)
             file_path = f"{TTS_FILES_DIR}/{audio_id}.mp3"
+            os.makedirs(TTS_FILES_DIR, exist_ok=True)
             tts.save(file_path)
             # Return audio and force download in browser
             return FileResponse(open(file_path, "rb"), as_attachment=True)
