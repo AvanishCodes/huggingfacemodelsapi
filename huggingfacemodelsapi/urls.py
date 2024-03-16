@@ -17,21 +17,18 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-
 # from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework import permissions
-from rest_framework.schemas import get_schema_view
 from drf_yasg.views import get_schema_view as gsv
 from drf_yasg import openapi
 
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 schema_view = gsv(
     openapi.Info(
         title="Voice Models API",
         default_version="v0.1",
         description="Voice Models API Documentation",
-        terms_of_service="https://github.com/AvanishCodes/cehr/blob/main/LICENSE.md",
+        terms_of_service="https://github.com/AvanishCodes/huggingfacemodelsapi/blob/main/LICENSE.md",
         contact=openapi.Contact(email="avanishcodes@gmail.com"),
         license=openapi.License(name="MIT License"),
     ),
@@ -45,4 +42,7 @@ urlpatterns = [
     # API Documentation
     path("", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
     path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
+
+    # API Endpoints
+    path("v1/", include("v1models.urls")),
 ]
