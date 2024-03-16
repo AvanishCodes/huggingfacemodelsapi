@@ -46,4 +46,5 @@ urlpatterns = [
     # API Endpoints
     path("authentication/", include("authentication.urls")),
     path("v1/", include("v1models.urls")),
+    path("health/", include("health.urls")),
 ]
