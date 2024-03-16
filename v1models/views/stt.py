@@ -75,6 +75,7 @@ class STTAPIView(APIView):
 
         # Save the uploaded file
         file_path = os.path.join(STT_FILES_DIR, f"{uuid_str}.mp3")
+        os.makedirs(STT_FILES_DIR, exist_ok=True)
         with open(file_path, "wb") as f:
             f.write(uploaded_file.read())
 

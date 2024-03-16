@@ -2,3 +2,6 @@
 /db.sqlite3
 /venv
 data/
+logs/
+.DS_Store
+migrations/
