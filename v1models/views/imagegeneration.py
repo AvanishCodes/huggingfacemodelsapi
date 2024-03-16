@@ -1,3 +1,4 @@
+import os
 from diffusers import StableDiffusionPipeline
 import torch
 import uuid
@@ -15,6 +16,7 @@ def generate_completions(prompt: str, filename: str):
     pipe = StableDiffusionPipeline.from_pretrained(MODEL, torch_dtype=torch.float32)
     image = pipe(prompt).images[0]
     filename = f"{IMAGE_GENERATION_FILES_DIR}/{filename}.png"
+    os.makedirs(IMAGE_GENERATION_FILES_DIR, exist_ok=True)
     image.save(filename)
     return filename
 
