@@ -1,4 +1,5 @@
 import os
+import logging
 import uuid
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -53,6 +54,7 @@ class TTSAPIView(APIView):
             # Return audio and force download in browser
             return FileResponse(open(file_path, "rb"), as_attachment=True)
         except Exception as e:
+            logging.error(f"Error converting text to speech: {e}")
             return Response(
                 {"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
