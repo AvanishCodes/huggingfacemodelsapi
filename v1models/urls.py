@@ -7,7 +7,7 @@ from django.urls import path
 
 urlpatterns = [
     path("gtts/tts/", TTSAPIView.as_view(), name="tts"),
-    path("pydub/stt/", STTAPIView.as_view(), name="stt"),
+    path("wave2vec2/stt/", STTAPIView.as_view(), name="stt"),
     path("gpt2/completions/", SentenceCompletionsAPIView.as_view(), name="completions"),
     path("diffusion/generations/", ImageGenerationAPIView.as_view(), name="generations"),
 ]
