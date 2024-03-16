@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework.permissions import IsAuthenticated
 from drf_yasg import openapi
 
 STT_FILES_DIR = "data/stt"
@@ -28,7 +29,7 @@ def generate_completions(prompt, num_completions=1, max_length=50):
         repetition_penalty=1.0,
         pad_token_id=tokenizer.eos_token_id,
         early_stopping=True,
-        num_beams=5  # Number of beams for beam search
+        num_beams=5,  # Number of beams for beam search
     )
     # Decode and return completions
     completions = [
@@ -36,13 +37,14 @@ def generate_completions(prompt, num_completions=1, max_length=50):
     ]
     _ = []
     for i, completion in enumerate(completions):
-        [_.append(item) for item in completion.split('\n\n')]
+        [_.append(item) for item in completion.split("\n\n")]
     _.sort()
     return _
 
 
-
 class SentenceCompletionsAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
     @swagger_auto_schema(
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,

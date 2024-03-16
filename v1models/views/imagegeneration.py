@@ -7,9 +7,11 @@ from rest_framework.response import Response
 from django.http import FileResponse
 from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework.permissions import IsAuthenticated
 from drf_yasg import openapi
 
 IMAGE_GENERATION_FILES_DIR = "data/imagegeneration"
+
 
 def generate_completions(prompt: str, filename: str):
     MODEL = "runwayml/stable-diffusion-v1-5"
@@ -21,9 +23,9 @@ def generate_completions(prompt: str, filename: str):
     return filename
 
 
-
-
 class ImageGenerationAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
     @swagger_auto_schema(
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
@@ -47,7 +49,7 @@ class ImageGenerationAPIView(APIView):
         uuid_str = str(uuid.uuid4())
         try:
             image_filename = generate_completions(input_text, uuid_str)
-            return FileResponse(open(image_filename, 'rb'), as_attachment=True)
+            return FileResponse(open(image_filename, "rb"), as_attachment=True)
         except Exception as e:
             return Response(
                 {"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR

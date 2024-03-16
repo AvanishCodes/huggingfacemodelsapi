@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework.permissions import IsAuthenticated
 from drf_yasg import openapi
 
 STT_FILES_DIR = "data/stt"
@@ -42,6 +43,8 @@ def convert_mp3_to_text(mp3_file):
 
 
 class STTAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
     @swagger_auto_schema(
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
